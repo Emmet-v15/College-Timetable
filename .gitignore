@@ -102,9 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
-<<<<<<< HEAD
 
 # Credentials and Timetable URL storage
 config.json
-=======
->>>>>>> 061f1967f204f2bbeb40880b5feda512df579e08
+
+# Chromium Cache
+cache/
