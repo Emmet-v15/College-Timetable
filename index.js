@@ -6,7 +6,7 @@ const port = 8080;
 const { username, password, timetableURL } = require('./config.json');
 
 async function fetchData() {
-    let browser = await puppeteer.launch({ devtools:false, userDataDir: './cache' });
+    let browser = await puppeteer.launch({ devtools:false, userDataDir: './cache', args: ['--no-sandbox', '--disable-setuid-sandbox'], });
 
     const page = await browser.newPage();
     await page.authenticate({'username': username, 'password': password});
