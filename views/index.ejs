@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=chrome">
+    <meta name="viewport" content="width=device-width, initial-sncale=1.0">
+    <meta name="darkreader" content="NO-DARKREADER-PLUGIN" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <title>Timetable</title>
+</head>
+
+<script>
+    import 'no-darkreader'
+    console.log('aaa');
+</script>
+
+<body>
+    <h1>Timetable</h1>
+    <h2><%= day %> </h2>
+    <table class="Timetable">
+        <thead>
+            <tr>
+                <td>TIME</td>
+                <td>LESSON</td>
+                <td>ROOM</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% lessons.forEach(lesson => { %> 
+                <tr>
+                    <td><%= lesson.startTime + "-" + lesson.endTime %></td>
+                    <td><%= lesson.course.replace(" Linear", "") %></td>
+                    <td><%= lesson.room %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

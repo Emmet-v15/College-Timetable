@@ -1,0 +1,50 @@
+@import url('https://fonts.gstatic.com/css2?family=Roboto+sans:400,700');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+body {
+    background-color: #121212 !important;
+}
+
+body h1 {
+    padding-top: 30px;
+    text-align: center;
+    color: rgb(209, 207, 204) !important;
+}
+
+body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: rgb(209, 207, 204) !important;
+}
+
+.timetable {
+    border-color: black !important;
+    width: 25em;
+    background-color: rgba(255,255,255,.09) !important;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
+    margin: 25px auto;
+}
+
+
+.timetable thead tr td {
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: rgb(190, 186, 182) !important;
+    padding: 8px;
+}
+
+.timetable tbody tr td{
+    background-color: rgba(255,255,255,.09);
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
+    color: rgb(190, 186, 182) !important;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
