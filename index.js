@@ -24,7 +24,7 @@ async function fetchData() {
 
     setTimeout(() => {
         browser.close();
-    }, 1000);
+    }, 60 * 1000);
     
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify({data: data.slice(0)}, null, 4));
     console.log('Fetched Data');
