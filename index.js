@@ -11,8 +11,7 @@ async function fetchData() {
     const page = await browser.newPage();
     await page.authenticate({'username': username, 'password': password});
     
-    page.goto(timetableURL);
-    await page.waitForSelector('#Content_Content_Content_MainContent_timetable1_tbltimetable tr');
+    await page.goto(timetableURL, {waitUntil : 'networkidle2' }).catch(e => void 0);
 
     const data = await page.evaluate(() => {
         const rows = document.querySelectorAll('#Content_Content_Content_MainContent_timetable1_tbltimetable tr');
