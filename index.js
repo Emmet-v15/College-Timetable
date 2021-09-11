@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 const app = require('./app');
-const port = 8080;
+const port = 80;
 const { username, password, timetableURL } = require('./config.json');
 
 async function fetchData() {
