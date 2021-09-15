@@ -4,6 +4,7 @@ const path = require('path');
 const port = 80;
 const { username, password, timetableURL } = require('./config.json');
 var app = false;
+var data = {};
 
 function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
@@ -37,14 +38,20 @@ async function fetchData() {
     setTimeout(() => {
         browser.close();
     }, 60 * 1000);
-    data.time = `${new Date().getHours()}:${new Date().getMinutes()}`
-    data.cells = cells.slice(0);
+    data = {
+        timestamp: Date.now(),
+        cells: cells.slice(0)
+    }
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify({data: data}, null, 4));
     console.log(`Fetched Data at ${new Date().getHours()}:${new Date().getMinutes()}`);
-    app? null : app = require('./app');
+    if (!app) runApp();
     setTimeout(fetchData, 60 * 60 * 1000);
 }
 
-app.listen(port, () => console.log(`App listening on port ${port}...`));
+function runApp() {
+    app = true;
+    require('./app').listen(port, () => console.log(`App listening on port ${port}...`));
+}
+
 
 fetchData();
