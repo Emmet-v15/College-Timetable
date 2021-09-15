@@ -27,7 +27,7 @@ function render(res, refreshTime) {
     res.render('index', {
         lessons: lessons[today],
         day: days[today],
-        refreshTime: refreshTime.join()
+        refreshTime: refreshTime.join("");
     });
 }
 
@@ -47,7 +47,7 @@ while (!lessons[today].length) {
 router.get('/', (req, res, next) => {
     let date = new Date();
     date.setTime(date.getTime() - data.timestamp)
-    let hours = date.getHours()-2;
+    let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
     let refreshTime = [];
