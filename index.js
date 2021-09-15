@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
-const app = require('./app');
 const port = 80;
 const { username, password, timetableURL } = require('./config.json');
+var app = false;
 
 function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
@@ -41,6 +41,7 @@ async function fetchData() {
     data.cells = cells.slice(0);
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify({data: data}, null, 4));
     console.log(`Fetched Data at ${new Date().getHours()}:${new Date().getMinutes()}`);
+    app? null : app = require('./app');
     setTimeout(fetchData, 60 * 60 * 1000);
 }
 
