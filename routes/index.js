@@ -70,7 +70,7 @@ router.get('/', (req, res, next) => {
         }
         if (seconds > 30) refreshTime.push(seconds + " seconds ago");
         else refreshTime.push("Just Now");
-    }g
+    }
 
 
     render(res, refreshTime);
