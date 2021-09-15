@@ -11,7 +11,7 @@ const weekdays = [
     [],
 ]
 
-data.forEach(( cell ) => {
+data.cells.forEach(( cell ) => {
     if (cell.length) {
         cell = cell.slice(cell.length-5);
         
@@ -33,7 +33,8 @@ while (!weekdays[today].length) {
 router.get('/', (req, res, next) => {
     res.render('index', {
         lessons: weekdays[today],
-        day: days[today]
+        day: days[today],
+        refreshTime: data.time
     });
 });
 
