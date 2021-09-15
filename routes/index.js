@@ -27,7 +27,7 @@ function render(res, refreshTime) {
     res.render('index', {
         lessons: lessons[today],
         day: days[today],
-        refreshTime: refreshTime.join("");
+        refreshTime: refreshTime.join("")
     });
 }
 
@@ -70,7 +70,7 @@ router.get('/', (req, res, next) => {
         }
         if (seconds > 30) refreshTime.push(seconds + " seconds ago");
         else refreshTime.push("Just Now");
-    }
+    }g
 
 
     render(res, refreshTime);
