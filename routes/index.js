@@ -26,9 +26,10 @@ data.cells.forEach(( cell ) => {
 
 let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 let today = new Date().getDay()-1;
-today = today >= 5? 0 : today;
+
 while (!lessons[today].length) {
     today++;
+    today = today >= 5? 0 : today;
 }
     
 !lessons[today].map(lesson => {
