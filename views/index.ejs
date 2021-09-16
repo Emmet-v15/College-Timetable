@@ -2,20 +2,18 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=chrome">
-    <meta name="viewport" content="width=device-width, initial-sncale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="darkreader" content="NO-DARKREADER-PLUGIN" />
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Timetable</title>
 </head>
 
-<script>
-    import 'no-darkreader'
-</script>
-
 <body>
+    <!-- <script> src="/public/js/script.js" </script> -->
     <h1>Timetable</h1>
     <h2><%= day %> </h2>
-    <h3>Last Updated: <%= refreshTime %></h3>
+    <h3>Last Updated: <span></span></h3>
     <table class="Timetable">
         <thead>
             <tr>
@@ -34,5 +32,45 @@
             <% }); %>
         </tbody>
     </table>
+
+    <script>
+        $(document).ready(function () {
+            let refreshTimestamp = <%= refreshTimestamp %>;
+
+            function run() {
+                let date = new Date();
+                date.setTime(date.getTime() - refreshTimestamp)
+                let hours = date.getHours();
+                let minutes = date.getMinutes();
+                let seconds = date.getSeconds();
+                let refreshTime = [];
+
+                if (hours) {
+                    refreshTime.push(hours + " hour");
+                    if (hours > 1) refreshTime.push("s");
+
+                    if (minutes) {
+                        refreshTime.push(", " + minutes + " minute");
+                        if (minutes > 1) refreshTime.push("s");
+                    }
+                } else {
+                    if (minutes) {
+                        refreshTime.push(minutes + " minute");
+                        if (minutes > 1) refreshTime.push("s, ");
+                        else refreshTime.push(", ");
+                    }
+                    if (seconds > 1) refreshTime.push(seconds + " second");
+                    else refreshTime.push("s");
+                }
+                
+                refreshTime.push(" ago");
+
+                $('body h3 span').text(refreshTime.join(""));
+                setTimeout(run, 100);
+            }
+            run();
+        });
+    </script>
+
 </body>
 </html>

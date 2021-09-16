@@ -23,13 +23,6 @@ data.cells.forEach(( cell ) => {
     }
 });
 
-function render(res, refreshTime) {
-    res.render('index', {
-        lessons: lessons[today],
-        day: days[today],
-        refreshTime: refreshTime.join("")
-    });
-}
 
 let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 let today = new Date().getDay()-1;
@@ -45,35 +38,12 @@ while (!lessons[today].length) {
 }).includes(false)? today++ : null;
 
 router.get('/', (req, res, next) => {
-    let date = new Date();
-    date.setTime(date.getTime() - data.timestamp)
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-    let refreshTime = [];
 
-    if (hours) {
-        refreshTime.push(hours + " hour");
-        if (hours > 1) refreshTime.push("s, ");
-        else refreshTime.push(", ");
-
-        if (minutes) {
-            refreshTime.push(minutes + " minute");
-            if (minutes > 1) refreshTime.push("s ago");
-            else refreshTime.push(" ago");
-        }
-    } else {
-        if (minutes) {
-            refreshTime.push(minutes + " minute");
-            if (minutes > 1) refreshTime.push("s, ");
-            else refreshTime.push(", ");
-        }
-        if (seconds > 30) refreshTime.push(seconds + " seconds ago");
-        else refreshTime.push("Just Now");
-    }
-
-
-    render(res, refreshTime);
+    res.render('index', {
+        lessons: lessons[today],
+        day: days[today],
+        refreshTimestamp: data.timestamp
+    });
 });
 
 module.exports = router;
