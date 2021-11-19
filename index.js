@@ -39,7 +39,7 @@ async function fetchData() {
         browser.close();
     }, 60 * 1000);
     data = {
-        timestamp: Date.now(),
+        timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0)
     }
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify({data: data}, null, 4));
