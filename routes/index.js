@@ -31,15 +31,22 @@ while (!lessons[today].length) {
     today++;
     today = today >= 5? 0 : today;
 }
-    
-!lessons[today].map(lesson => {
-    let date = new Date();
-    date.setHours(lesson.endTime.split(":")[0]);
-    return date < new Date();
-}).includes(false)? today++ : null;
+
+if (!lessons[today].map(lesson => {
+        let date = new Date();
+        date.setHours(lesson.endTime.split(":")[0]);
+        return date < new Date();
+    }).includes(false)) {
+    today++
+    today = today >= 5? 0 : today;
+}
+
+while (!lessons[today].length) {
+    today++;
+    today = today >= 5? 0 : today;
+}
 
 router.get('/', (req, res, next) => {
-
     res.render('index', {
         lessons: lessons[today],
         day: days[today],
