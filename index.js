@@ -6,19 +6,6 @@ const { username, password, timetableURL } = require('./config.json');
 var app = false;
 var data = {};
 
-function timeConverter(UNIX_timestamp){
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-    return time;
-  }
-
 async function fetchData() {
     let browser = await puppeteer.launch({ devtools:false, userDataDir: './cache', args: ['--no-sandbox', '--disable-setuid-sandbox'], });
 
@@ -38,6 +25,12 @@ async function fetchData() {
     setTimeout(() => {
         browser.close();
     }, 60 * 1000);
+
+    if (cells.length == 0) {
+        console.log("Failed to fetch, Retrying...");
+        fetchData()
+        return
+    }
     data = {
         timestamp: Date.now() + 60 * 60 * 1000,
         cells: cells.slice(0)

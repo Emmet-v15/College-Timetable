@@ -11,27 +11,31 @@
 
 <body>
     <!-- <script> src="/public/js/script.js" </script> -->
-    <h1>Timetable</h1>
-    <h2><%= day %> </h2>
-    <h3>Last Updated: <span></span></h3>
-    <table class="Timetable">
-        <thead>
-            <tr>
-                <td>TIME</td>
-                <td>LESSON</td>
-                <td>ROOM</td>
-            </tr>
-        </thead>
-        <tbody>
-            <% lessons.forEach(lesson => { %> 
-                <tr>
-                    <td><%= lesson.startTime + "-" + lesson.endTime %></td>
-                    <td><%= lesson.course.replace(" Linear", "") %></td>
-                    <td><%= lesson.room %></td>
-                </tr>
-            <% }); %>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="child">
+            <h1>Timetable</h1>
+            <h2><%= day %> </h2>
+            <h3>Last Updated: <span></span></h3>
+            <table class="Timetable">
+                <thead>
+                    <tr>
+                        <td>TIME</td>
+                        <td>LESSON</td>
+                        <td>ROOM</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% lessons.forEach(lesson => { %> 
+                        <tr>
+                            <td><%= lesson.startTime + "-" + lesson.endTime %></td>
+                            <td><%= lesson.course.replace(" Linear", "") %></td>
+                            <td><%= lesson.room %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <script>
         $(document).ready(function () {
