@@ -108,3 +108,6 @@ config.json
 
 # Chromium Cache
 cache/
+
+# Lessons Cache
+data.json

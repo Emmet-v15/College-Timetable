@@ -1,59 +1,74 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+const { parse } = require('path');
 
-const { data } = require('../data.json');
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-const lessons = [
-    [],
-    [],
-    [],
-    [],
-    [],
-]
+getLessons = () => {
+    let { data } = JSON.parse(fs.readFileSync('./data.json'))
+    let lessons = [
+        [],
+        [],
+        [],
+        [],
+        [],
+    ]
+    data.cells.forEach(( cell ) => {
+        if (cell.length) {
+            cell = cell.slice(cell.length-5);
+            for (let i = 0; i < cell.length; i++) {
+                const slot = cell[i];
+                if (slot.length === 0) continue;
+                lessons[i].push(slot.match(/(?<startTime>\d\d:\d\d) - (?<endTime>\d\d:\d\d) (?<course>.*) A Level .* (?<room>.*)/).groups);
+            };
+        }
+    });
+    return lessons
+}
 
-data.cells.forEach(( cell ) => {
-    if (cell.length) {
-        cell = cell.slice(cell.length-5);
-        for (let i = 0; i < cell.length; i++) {
-            const slot = cell[i];
-            if (slot.length === 0) continue;
-            lessons[i].push(slot.match(/(?<startTime>\d\d:\d\d) - (?<endTime>\d\d:\d\d) (?<course>.*) A Level .* (?<room>.*)/).groups);
-        };
+getDay = () => {
+    let lessons = getLessons();
+    function addDay() {
+        schoolDay++;
+        schoolDay = schoolDay >= 5? schoolDay-5 : schoolDay;
     }
-});
-
-function addDay() {
-    schoolDay++;
+    
+    function lessonsOver() {
+        return lessons[schoolDay] && !lessons[schoolDay].map(lesson => {
+            let date = new Date();
+            date.setHours(lesson.endTime.split(":")[0]);
+            return date < new Date();
+        }).includes(false)
+    }
+    
+    function checkLessons() {
+        while (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
+            addDay();
+        }
+    }
+    let schoolDay = new Date().getUTCDay();
     schoolDay = schoolDay >= 7? schoolDay-7 : schoolDay;
-}
-
-function lessonsOver() {
-    return console.log(lessons[schoolDay] && !lessons[schoolDay].map(lesson => {
-        let date = new Date();
-        date.setHours(lesson.endTime.split(":")[0]);
-        return date < new Date();
-    }).includes(false))
-}
-
-let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-let schoolDay = new Date().getDay();
-
-if (!lessons[schoolDay] || lessons[schoolDay] == []) {
-    while (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
+    
+    if (schoolDay >= 6 || schoolDay == 0) {
+        schoolDay = 0
+    } else schoolDay--
+    
+    if (!lessons[schoolDay] || lessons[schoolDay].length == 0) {
+        checkLessons()
+    } else if (lessonsOver()) {
         addDay();
+        checkLessons()
     }
-} else if (lessonsOver()) {
-    addDay();
-    while (!lessons[schoolDay] || lessons[schoolDay] == []) {
-        addDay();
-    }
+
+    return schoolDay
 }
 
 router.get('/', (req, res, next) => {
     res.render('index', {
-        lessons: lessons[schoolDay],
-        day: days[schoolDay],
-        refreshTimestamp: data.timestamp
+        lessons: getLessons()[getDay()],
+        day: days[getDay()],
+        refreshTimestamp: JSON.parse(fs.readFileSync('./data.json')).data.timestamp
     });
 });
 

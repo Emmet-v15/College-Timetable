@@ -53,5 +53,4 @@ function runApp() {
     require('./app').listen(port, () => console.log(`App listening on port ${port}...`));
 }
 
-
-fetchData();
+setTimeout(fetchData, 10000)
