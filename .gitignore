@@ -104,10 +104,10 @@ dist
 .tern-port
 
 # Credentials and Timetable URL storage
-config.json
+./config.json
 
 # Chromium Cache
 cache/
 
 # Lessons Cache
-data.json
+./data.json 
