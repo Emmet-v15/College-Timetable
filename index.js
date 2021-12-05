@@ -46,4 +46,5 @@ function runApp() {
     require('./app').listen(port, () => console.log(`App listening on port ${port}...`));
 }
 
-fetchData()
+// fetchData()
+runApp();

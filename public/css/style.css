@@ -5,7 +5,7 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    letter-spccing: 0.5px;
+    letter-spacing: 0.5px;
 }
 
 
@@ -20,13 +20,13 @@ body h1 {
 }
 
 body h2, h3 {
-    padding-top: 10px;
+    padding-top: 2px;
     /* text-align: center; */
     color: rgb(209, 207, 204) !important;
 }
 
 .timetable {
-    font-size: clamp(1rem, 2vw, 2rem);
+    font-size: max(16px, 2vw);
     border-color: black !important;
     table-layout: auto;
     width: max(50%, 341px);
