@@ -110,4 +110,8 @@ dist
 cache/
 
 # Lessons Cache
-./data.json 
+./data.json
+
+# SSL Certificates
+sslcert/
+data.json

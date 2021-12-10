@@ -4,6 +4,7 @@
     "express": "^4.17.1",
     "no-darkreader": "^1.0.1",
     "nodemon": "^2.0.12",
+    "openssl": "^2.0.0",
     "pug": "^3.0.2",
     "puppeteer": "^10.2.0"
   },
