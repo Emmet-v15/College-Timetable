@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
-const port = 80;
+const port = 443;
 const { username, password, timetableURL } = require('./config.json');
 var app = false;
 var data = {};
@@ -43,6 +43,12 @@ async function fetchData() {
 
 function runApp() {
     app = true;
+    const options = {
+        key: fs.readFileSync('sslcert/v15.studio.key'),
+        cert: fs.readFileSync('sslcert/v15.studio.pem'),
+        ca: fs.readFileSync('sslcert/origin-ca.pem')
+    };
+
     require('./app').listen(port, () => console.log(`App listening on port ${port}...`));
 }
 

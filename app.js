@@ -11,10 +11,6 @@ const options = {
     ca: fs.readFileSync('sslcert/origin-ca.pem')
 };
 
-https.createServer(options, app).listen(443, () => {
-    console.log('Listening...')
-});
-
 app.set('view engine', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -22,4 +18,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
-module.exports = app;
+module.exports = https.createServer(options, app);
