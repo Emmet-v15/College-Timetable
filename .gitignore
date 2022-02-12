@@ -115,3 +115,4 @@ cache/
 # SSL Certificates
 sslcert/
 data.json
+sslcert.zip
