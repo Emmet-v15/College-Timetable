@@ -8,6 +8,10 @@ body {
     background: linear-gradient(#141e30, rgb(56, 47, 73));
 }
 
+div #buttons {
+    background-color: #fff;
+}
+
 .login-box {
     position: absolute;
     top: 50%;
