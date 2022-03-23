@@ -8,10 +8,6 @@ body {
     background: linear-gradient(#141e30, rgb(56, 47, 73));
 }
 
-#buttons {
-    background-color: #fff;
-}
-
 .login-box {
     position: absolute;
     top: 50%;
@@ -37,7 +33,7 @@ body {
 }
 
 .login-box .user-box input {
-    width: 100%;
+    width: 50%;
     padding: 10px 0;
     font-size: 16px;
     color: #fff;
