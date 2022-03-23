@@ -1,28 +1,20 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Koaxy's Login</title>
+        <title>Grade Calculator</title>
         <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
 
     <body>
         <div class="login-box">
-            <h2>Login</h2>
+            <h2>Grade Calculator</h2>
             <form>
                 <div class="user-box">
-                    <input type="text" name="" required="" id="username" />
-                    <label>Username</label>
-                </div>
-                <div class="user-box">
-                    <input type="password" name="" required="" id="password" />
-                    <label>Password</label>
-                </div>
-                <div class="user-box">
-                    <input type="password" name="" required="" id="key" />
-                    <label>Key</label>
+                    <input type="text" name="" required="" id="Grade" />
+                    <label>Grade</label>
                 </div>
 
-                <button onclick="login()">
+                <button onclick="submit()">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -34,26 +26,6 @@
     </body>
 
     <script>
-        const xhr = new XMLHttpRequest();
-        const login = () => {
-            xhr.open("POST", "http://localhost:3000/users/login");
-            xhr.setRequestHeader("Content-Type", "application/json");
-            console.log(document.getElementById("password").value);
-            xhr.send(
-                JSON.stringify({
-                    username: document.getElementById("username").value,
-                    password: document.getElementById("password").value,
-                    key: document.getElementById("key").value,
-                })
-            );
-        };
-
-        xhr.onload = function () {
-            if (xhr.status === 200 || xhr.status === 400) {
-                alert(xhr.responseText);
-            } else {
-                alert("Username and password combo not allowed or it's incorrect.");
-            }
-        };
+        const submit = () => {};
     </script>
 </html>
