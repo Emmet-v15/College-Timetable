@@ -8,7 +8,7 @@ body {
     background: linear-gradient(#141e30, rgb(56, 47, 73));
 }
 
-div #buttons {
+#buttons {
     background-color: #fff;
 }
 
