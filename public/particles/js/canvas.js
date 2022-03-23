@@ -1,10 +1,10 @@
-let NUM_BALLS = 300,
+let NUM_BALLS = 1000,
     DAMPING = 0.6,
-    GRAVITY = 9.8/100,
+    GRAVITY = 9.8 / 100,
     GRAVITY_ENABLED = true,
     MOUSE_SIZE = 100,
     SPEED = 1;
-    clayMode = false;
+clayMode = false;
 
 let canvas,
     ctx,
@@ -32,10 +32,10 @@ let Ball = function (x, y, radius) {
     this.fx = (Math.random() - 0.5) * 10;
     this.fy = (Math.random() - 0.5) * 10;
 
-    this.radius = radius// + Math.random() * 10;
-    this.volume = (Math.PI*this.radius^2)
-    this.density = .1
-    this.mass = this.density*this.volume;
+    this.radius = radius; // + Math.random() * 10;
+    this.volume = (Math.PI * this.radius) ^ 2;
+    this.density = 0.1;
+    this.mass = this.density * this.volume;
 
     this.link = undefined;
 
@@ -45,8 +45,7 @@ let Ball = function (x, y, radius) {
 Ball.prototype.apply_force = function (delta) {
     delta *= delta;
 
-    if (!clayMode && GRAVITY_ENABLED)
-        this.fy += GRAVITY * this.mass;
+    if (!clayMode && GRAVITY_ENABLED) this.fy += GRAVITY * this.mass;
 
     this.fx = Math.min(this.fx, 1000);
     this.fy = Math.min(this.fy, 1000);
@@ -84,14 +83,30 @@ let resolve_collisions = function (ip, ctx) {
         //balls[i].color = [0, 255, 0, 1];
         let ball_1 = balls[i];
 
-        let speed = (1+Math.sqrt((ball_1.x - ball_1.px)*(ball_1.x - ball_1.px) + (ball_1.y - ball_1.py)*(ball_1.y - ball_1.py)));
-        let alpha = Math.max(Math.min(ball_1.color[3] * Math.max(Math.abs(ball_1.fx), Math.abs(ball_1.fy) + .2), 1), .3)
-        let red = (Math.min((ball_1.color[0]+10)*speed/2, 180) + ((innerHeight-ball_1.y)/innerHeight)*255);
+        let speed =
+            1 +
+            Math.sqrt(
+                (ball_1.x - ball_1.px) * (ball_1.x - ball_1.px) +
+                    (ball_1.y - ball_1.py) * (ball_1.y - ball_1.py)
+            );
+        let alpha = Math.max(
+            Math.min(
+                ball_1.color[3] *
+                    Math.max(Math.abs(ball_1.fx), Math.abs(ball_1.fy) + 0.2),
+                1
+            ),
+            0.3
+        );
+        let red =
+            Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) +
+            ((innerHeight - ball_1.y) / innerHeight) * 255;
 
         let diff_x_mouse = ball_1.x - mouse.x;
         let diff_y_mouse = ball_1.y - mouse.y;
-        let dist_mouse = Math.sqrt(diff_x_mouse * diff_x_mouse + diff_y_mouse * diff_y_mouse);
-        
+        let dist_mouse = Math.sqrt(
+            diff_x_mouse * diff_x_mouse + diff_y_mouse * diff_y_mouse
+        );
+
         if (mouse.down[0]) {
             let real_dist = dist_mouse - (ball_1.radius + MOUSE_SIZE);
 
@@ -99,29 +114,37 @@ let resolve_collisions = function (ip, ctx) {
                 let depth_x = diff_x_mouse * (real_dist / dist_mouse);
                 let depth_y = diff_y_mouse * (real_dist / dist_mouse);
 
-                ball_1.x -= depth_x * 0.05 * (clayMode*10+1);
-                ball_1.y -= depth_y * 0.05 * (clayMode*10+1);
+                ball_1.x -= depth_x * 0.05 * (clayMode * 10 + 1);
+                ball_1.y -= depth_y * 0.05 * (clayMode * 10 + 1);
             }
-            alpha = 200/dist_mouse;
+            alpha = 200 / dist_mouse;
         }
 
         if (ip && mouse.down[2]) {
-            let xDist = mouse.x-ball_1.x;
-            let yDist = mouse.y-ball_1.y;
-            let length = Math.sqrt(xDist*xDist + yDist*yDist);
-            let unit_x = (xDist)/length;
-            let unit_y = (yDist)/length;
-            let force = ((300/Math.max(length, 300)) * ball_1.density * ball_1.mass) * (clayMode*10+1)
-            
+            let xDist = mouse.x - ball_1.x;
+            let yDist = mouse.y - ball_1.y;
+            let length = Math.sqrt(xDist * xDist + yDist * yDist);
+            let unit_x = xDist / length;
+            let unit_y = yDist / length;
+            let force =
+                (300 / Math.max(length, 300)) *
+                ball_1.density *
+                ball_1.mass *
+                (clayMode * 10 + 1);
+
             ball_1.fx += unit_x * force * 2;
             ball_1.fy += unit_y * force * 2;
-            alpha = 200/dist_mouse;
+            alpha = 200 / dist_mouse;
         }
 
         ball_1.fillstyle = `rgb(
-            ${200/dist_mouse*alpha},
-            ${(Math.min((ball_1.color[0]+10)*speed/2, 180) + ((innerHeight-ball_1.y)/innerHeight)*255)*alpha},
-            ${(ball_1.color[2]+10)*alpha})`
+            ${(200 / dist_mouse) * alpha},
+            ${
+                (Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) +
+                    ((innerHeight - ball_1.y) / innerHeight) * 255) *
+                alpha
+            },
+            ${(ball_1.color[2] + 10) * alpha})`;
 
         let n = balls.length;
         while (n--) {
@@ -135,8 +158,6 @@ let resolve_collisions = function (ip, ctx) {
             let length = diff_x * diff_x + diff_y * diff_y;
             let dist = Math.sqrt(length);
             let real_dist = dist - (ball_1.radius + ball_2.radius);
-
-
 
             if (real_dist < 0) {
                 //ball_1.color = [255, 0, 0, 1];
@@ -176,15 +197,26 @@ let resolve_collisions = function (ip, ctx) {
                     ball_2.py = ball_2.y - vel_y2;
                 }
             }
-            
+
             if (ip) {
-                if (dist < 2*ball_1.radius+20 && ball_1.link != ball_2 && ball_2.link != ball_1) {
-                    ball_2.fillstyle = ball_1.fillstyle; 
+                if (
+                    dist < 2 * ball_1.radius + 20 &&
+                    ball_1.link != ball_2 &&
+                    ball_2.link != ball_1
+                ) {
+                    ball_2.fillstyle = ball_1.fillstyle;
                     ball_1.link = ball_2;
                     ball_2.link = ball_1;
                     //let speed = (1+Math.sqrt((ball_1.x - ball_1.px)*(ball_1.x - ball_1.px), (ball_1.x - ball_1.py)*(ball_1.x - ball_1.py)))*3;
-                    drawLine(ctx, ball_1.x, ball_1.y, ball_2.x, ball_2.y, (ball_1.radius + ball_2.radius), ball_1.fillstyle);
-
+                    drawLine(
+                        ctx,
+                        ball_1.x,
+                        ball_1.y,
+                        ball_2.x,
+                        ball_2.y,
+                        ball_1.radius + ball_2.radius,
+                        ball_1.fillstyle
+                    );
                 } else {
                     ball_1.link == undefined;
                     ball_2.link == undefined;
@@ -246,14 +278,13 @@ let update = function () {
     let delta = SPEED / iter;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     while (iter--) {
         let i = balls.length;
 
         while (i--) {
             balls[i].apply_force(delta);
-            if (!clayMode)
-                balls[i].verlet();
+            if (!clayMode) balls[i].verlet();
         }
 
         resolve_collisions(0);
@@ -280,14 +311,14 @@ let update = function () {
         ctx.fill();
         ctx.stroke();
     }
-    
+
     //console.log(new Date().getTime() - time);
 };
 
 let add_ball = function (x, y, r) {
     var x = x || canvas.height / 2 + Math.random() - 0.5 * 10,
         y = y || canvas.height / 2 + Math.random() - 0.5 * 10,
-        r = r || 20;
+        r = r || 5;
     balls.push(new Ball(x, y, r));
 };
 
@@ -300,18 +331,17 @@ window.onload = function () {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
-    while (NUM_BALLS--) add_ball(undefined,undefined,undefined);
+    while (NUM_BALLS--) add_ball(undefined, undefined, undefined);
 
     function registerMouse() {
         document.addEventListener("mousemove", (event) => {
             (mouse.x = event.clientX), (mouse.y = event.clientY);
-            
         });
         document.addEventListener("mousedown", (event) => {
-            mouse.down[event.button] = true;        
+            mouse.down[event.button] = true;
             if (event.button == 1)
                 for (let i = 0; i <= 7; i++)
-                    add_ball(mouse.x, mouse.y,undefined);
+                    add_ball(mouse.x, mouse.y, undefined);
             event.preventDefault();
         });
         document.addEventListener("mouseup", (event) => {
@@ -323,10 +353,10 @@ window.onload = function () {
 
     document.onkeydown = (event) => {
         switch (event.key) {
-            case 'g':
+            case "g":
                 GRAVITY_ENABLED = !GRAVITY_ENABLED;
                 break;
-            case 'c':
+            case "c":
                 clayMode = !clayMode;
                 break;
         }

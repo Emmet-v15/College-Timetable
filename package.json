@@ -6,7 +6,7 @@
     "nodemon": "^2.0.12",
     "openssl": "^2.0.0",
     "pug": "^3.0.2",
-    "puppeteer": "^10.2.0"
+    "puppeteer": "^13.3.1"
   },
   "name": "portalscraper",
   "version": "1.0.0",
