@@ -1,4 +1,4 @@
-let NUM_BALLS = 1000,
+let NUM_BALLS = 500,
     DAMPING = 0.6,
     GRAVITY = 9.8 / 100,
     GRAVITY_ENABLED = true,
