@@ -1,4 +1,4 @@
-let NUM_BALLS = 500,
+let NUM_BALLS = 300,
     DAMPING = 0.6,
     GRAVITY = 9.8 / 100,
     GRAVITY_ENABLED = true,
@@ -86,26 +86,17 @@ let resolve_collisions = function (ip, ctx) {
         let speed =
             1 +
             Math.sqrt(
-                (ball_1.x - ball_1.px) * (ball_1.x - ball_1.px) +
-                    (ball_1.y - ball_1.py) * (ball_1.y - ball_1.py)
+                (ball_1.x - ball_1.px) * (ball_1.x - ball_1.px) + (ball_1.y - ball_1.py) * (ball_1.y - ball_1.py)
             );
         let alpha = Math.max(
-            Math.min(
-                ball_1.color[3] *
-                    Math.max(Math.abs(ball_1.fx), Math.abs(ball_1.fy) + 0.2),
-                1
-            ),
+            Math.min(ball_1.color[3] * Math.max(Math.abs(ball_1.fx), Math.abs(ball_1.fy) + 0.2), 1),
             0.3
         );
-        let red =
-            Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) +
-            ((innerHeight - ball_1.y) / innerHeight) * 255;
+        let red = Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) + ((innerHeight - ball_1.y) / innerHeight) * 255;
 
         let diff_x_mouse = ball_1.x - mouse.x;
         let diff_y_mouse = ball_1.y - mouse.y;
-        let dist_mouse = Math.sqrt(
-            diff_x_mouse * diff_x_mouse + diff_y_mouse * diff_y_mouse
-        );
+        let dist_mouse = Math.sqrt(diff_x_mouse * diff_x_mouse + diff_y_mouse * diff_y_mouse);
 
         if (mouse.down[0]) {
             let real_dist = dist_mouse - (ball_1.radius + MOUSE_SIZE);
@@ -126,11 +117,7 @@ let resolve_collisions = function (ip, ctx) {
             let length = Math.sqrt(xDist * xDist + yDist * yDist);
             let unit_x = xDist / length;
             let unit_y = yDist / length;
-            let force =
-                (300 / Math.max(length, 300)) *
-                ball_1.density *
-                ball_1.mass *
-                (clayMode * 10 + 1);
+            let force = (300 / Math.max(length, 300)) * ball_1.density * ball_1.mass * (clayMode * 10 + 1);
 
             ball_1.fx += unit_x * force * 2;
             ball_1.fy += unit_y * force * 2;
@@ -140,8 +127,7 @@ let resolve_collisions = function (ip, ctx) {
         ball_1.fillstyle = `rgb(
             ${(200 / dist_mouse) * alpha},
             ${
-                (Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) +
-                    ((innerHeight - ball_1.y) / innerHeight) * 255) *
+                (Math.min(((ball_1.color[0] + 10) * speed) / 2, 180) + ((innerHeight - ball_1.y) / innerHeight) * 255) *
                 alpha
             },
             ${(ball_1.color[2] + 10) * alpha})`;
@@ -177,12 +163,8 @@ let resolve_collisions = function (ip, ctx) {
                 ball_2.y += depth_y * 0.5;
 
                 if (ip) {
-                    let pr1 =
-                            (DAMPING * (diff_x * vel_x1 + diff_y * vel_y1)) /
-                            length,
-                        pr2 =
-                            (DAMPING * (diff_x * vel_x2 + diff_y * vel_y2)) /
-                            length;
+                    let pr1 = (DAMPING * (diff_x * vel_x1 + diff_y * vel_y1)) / length,
+                        pr2 = (DAMPING * (diff_x * vel_x2 + diff_y * vel_y2)) / length;
 
                     vel_x1 += pr2 * diff_x - pr1 * diff_x;
                     vel_x2 += pr1 * diff_x - pr2 * diff_x;
@@ -199,11 +181,7 @@ let resolve_collisions = function (ip, ctx) {
             }
 
             if (ip) {
-                if (
-                    dist < 2 * ball_1.radius + 20 &&
-                    ball_1.link != ball_2 &&
-                    ball_2.link != ball_1
-                ) {
+                if (dist < 2 * ball_1.radius + 20 && ball_1.link != ball_2 && ball_2.link != ball_1) {
                     ball_2.fillstyle = ball_1.fillstyle;
                     ball_1.link = ball_2;
                     ball_2.link = ball_1;
@@ -318,7 +296,7 @@ let update = function () {
 let add_ball = function (x, y, r) {
     var x = x || canvas.height / 2 + Math.random() - 0.5 * 10,
         y = y || canvas.height / 2 + Math.random() - 0.5 * 10,
-        r = r || 5;
+        r = r || 20;
     balls.push(new Ball(x, y, r));
 };
 
@@ -339,9 +317,7 @@ window.onload = function () {
         });
         document.addEventListener("mousedown", (event) => {
             mouse.down[event.button] = true;
-            if (event.button == 1)
-                for (let i = 0; i <= 7; i++)
-                    add_ball(mouse.x, mouse.y, undefined);
+            if (event.button == 1) for (let i = 0; i <= 7; i++) add_ball(mouse.x, mouse.y, undefined);
             event.preventDefault();
         });
         document.addEventListener("mouseup", (event) => {
