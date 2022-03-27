@@ -1,4 +1,4 @@
-import HexGroup from "./hex.js";
+import { HexGroup } from "./hex.js";
 
 let canvas,
     mouse = { down: [false, false, false], x: 0, y: 0 };
