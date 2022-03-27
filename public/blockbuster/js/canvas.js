@@ -107,7 +107,7 @@ window.onload = () => {
         e.preventDefault();
     };
 
-    generateHexes = () => {
+    const generateHexes = () => {
         // hexes.add(new Hex(500, 500));
 
         let x = startx;
